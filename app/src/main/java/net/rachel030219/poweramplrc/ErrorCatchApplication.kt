@@ -5,6 +5,7 @@ import android.app.Application
 class ErrorCatchApplication: Application() {
     override fun onCreate() {
         super.onCreate()
+        NotificationChannels.ensureCreated(this)
         val crashHandler = SAFCrashHandler().apply {
             init(this@ErrorCatchApplication)
         }
