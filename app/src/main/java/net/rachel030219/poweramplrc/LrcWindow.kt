@@ -203,6 +203,7 @@ object LrcWindow {
     }
 
     fun sendNotification(context: Context?, extras: Bundle, ongoing: Boolean){
+        NotificationChannels.ensureCreated(context!!)
         val realExtras: Bundle = extras
         val pendingIntent: PendingIntent?
         val builder = NotificationCompat.Builder(context!!, "ENTRANCE").apply {
