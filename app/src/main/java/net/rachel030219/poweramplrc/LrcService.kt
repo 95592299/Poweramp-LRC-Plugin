@@ -46,7 +46,7 @@ class LrcService: Service(), RemoteTrackTime.TrackTimeListener {
             if (opacity != null && showingBg)
                 background = ColorDrawable(Color.argb(opacity!!, 0, 0, 0))
         }
-        if (intent!!.getBooleanExtra("foreground", false)) {
+        if (intent?.getBooleanExtra("foreground", false) == true) {
             val notificationIntent = Intent().apply {
                 action = Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS
                 putExtra(Settings.EXTRA_APP_PACKAGE, packageName)
@@ -68,7 +68,7 @@ class LrcService: Service(), RemoteTrackTime.TrackTimeListener {
             }
             startForeground(211, notificationBuilder.build())
         }
-        if (intent.hasExtra("request")) {
+        if (intent?.hasExtra("request") == true) {
             intent.extras?.let { extras ->
                 when (intent.getIntExtra("request", 0)) {
                     LrcWindow.REQUEST_WINDOW -> {
@@ -177,6 +177,8 @@ class LrcService: Service(), RemoteTrackTime.TrackTimeListener {
     }
 
     override fun onCreate() {
+        super.onCreate()
+        NotificationChannels.ensureCreated(this)
         remoteTrackTime = RemoteTrackTime(this)
         remoteTrackTime!!.setTrackTimeListener(this)
         remoteTrackTime!!.registerAndLoadStatus()
